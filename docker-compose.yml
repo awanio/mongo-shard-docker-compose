@@ -3,61 +3,73 @@ services:
 
   ## Config Servers
   config01:
-    image: mongo
+    image: mongo:3.4.5
     command: mongod --port 27017 --configsvr --replSet configserver --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
+      - /data/volumes/stratistik/mongodb/sharding/config01/db:/data/db
   config02:
-    image: mongo
+    image: mongo:3.4.5
     command: mongod --port 27017 --configsvr --replSet configserver --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
+      - /data/volumes/stratistik/mongodb/sharding/config02/db:/data/db
   config03:
-    image: mongo
+    image: mongo:3.4.5
     command: mongod --port 27017 --configsvr --replSet configserver --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
+      - /data/volumes/stratistik/mongodb/sharding/config03/db:/data/db
 
   ## Shards
   shard01a:
-    image: mongo
+    image: mongo:3.4.5
     command: mongod --port 27018 --shardsvr --replSet shard01 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
+      - /data/volumes/stratistik/mongodb/sharding/shard01a/db:/data/db
   shard01b:
-    image: mongo
+    image: mongo:3.4.5
     command: mongod --port 27018 --shardsvr --replSet shard01 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
+      - /data/volumes/stratistik/mongodb/sharding/shard01b/db:/data/db
   shard02a:
-    image: mongo
+    image: mongo:3.4.5
     command: mongod --port 27019 --shardsvr --replSet shard02 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
+      - /data/volumes/stratistik/mongodb/sharding/shard02a/db:/data/db
   shard02b:
-    image: mongo
+    image: mongo:3.4.5
     command: mongod --port 27019 --shardsvr --replSet shard02 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
+      - /data/volumes/stratistik/mongodb/sharding/shard02b/db:/data/db
   shard03a:
-    image: mongo
+    image: mongo:3.4.5
     command: mongod --port 27020 --shardsvr --replSet shard03 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
+      - /data/volumes/stratistik/mongodb/sharding/shard03a/db:/data/db
   shard03b:
-    image: mongo
+    image: mongo:3.4.5
     command: mongod --port 27020 --shardsvr --replSet shard03 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
+      - /data/volumes/stratistik/mongodb/sharding/shard03b/db:/data/db
 
   ## Router
   router:
-    image: mongo
+    image: mongo:3.4.5
     command: mongos --port 27017 --configdb configserver/config01:27017,config02:27017,config03:27017 --bind_ip_all
     ports:
       - "27017:27017"
     volumes:
       - ./scripts:/scripts
+      - /data/volumes/stratistik/mongodb/sharding/router/db:/data/db
+    networks:
+      - awanet-resurce
     depends_on:
       - config01
       - config02
@@ -68,3 +80,7 @@ services:
       - shard02b
       - shard03a
       - shard03b
+
+networks:
+  awanet-resurce:
+    external: true
