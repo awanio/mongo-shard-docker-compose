@@ -1,4 +1,4 @@
-version: '2'
+version: '3.3'
 services:
 
   ## Config Servers
@@ -8,18 +8,35 @@ services:
     volumes:
       - ./scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/config01/db:/data/db
+    deploy:
+      replicas: 1
+        placement:
+          constraints:
+            - node.hostname == subnet.27.124.85.82.mlink.net.id
+
   config02:
     image: mongo
     command: mongod --port 27017 --configsvr --replSet configserver --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/config02/db:/data/db
+    deploy:
+      replicas: 1
+        placement:
+          constraints:
+            - node.hostname == subnet.27.124.85.82.mlink.net.id
+    
   config03:
     image: mongo
     command: mongod --port 27017 --configsvr --replSet configserver --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/config03/db:/data/db
+    deploy:
+      replicas: 1
+        placement:
+          constraints:
+            - node.hostname == subnet.27.124.85.82.mlink.net.id
 
   ## Shards
   shard01a:
@@ -28,37 +45,72 @@ services:
     volumes:
       - ./scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard01a/db:/data/db
+    deploy:
+      replicas: 1
+        placement:
+          constraints:
+            - node.hostname == subnet.27.124.85.82.mlink.net.id
+    
   shard01b:
     image: mongo
     command: mongod --port 27018 --shardsvr --replSet shard01 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard01b/db:/data/db
+    deploy:
+      replicas: 1
+        placement:
+          constraints:
+            - node.hostname == subnet.27.124.85.82.mlink.net.id
+    
   shard02a:
     image: mongo
     command: mongod --port 27019 --shardsvr --replSet shard02 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard02a/db:/data/db
+    deploy:
+      replicas: 1
+        placement:
+          constraints:
+            - node.hostname == subnet.27.124.85.82.mlink.net.id
+    
   shard02b:
     image: mongo
     command: mongod --port 27019 --shardsvr --replSet shard02 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard02b/db:/data/db
+    deploy:
+      replicas: 1
+        placement:
+          constraints:
+            - node.hostname == subnet.27.124.85.82.mlink.net.id
+    
   shard03a:
     image: mongo
     command: mongod --port 27020 --shardsvr --replSet shard03 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard03a/db:/data/db
+    deploy:
+      replicas: 1
+        placement:
+          constraints:
+            - node.hostname == subnet.27.124.85.82.mlink.net.id
+    
   shard03b:
     image: mongo
     command: mongod --port 27020 --shardsvr --replSet shard03 --noprealloc --smallfiles --oplogSize 16
     volumes:
       - ./scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard03b/db:/data/db
-
+    deploy:
+      replicas: 1
+        placement:
+          constraints:
+            - node.hostname == subnet.27.124.85.82.mlink.net.id
+    
   ## Router
   router:
     image: mongo
@@ -68,6 +120,11 @@ services:
     volumes:
       - ./scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/router/db:/data/db
+    deploy:
+      replicas: 3
+        placement:
+          constraints:
+            - node.hostname == subnet.27.124.85.82.mlink.net.id
     networks:
       - awanet-resurce
       - default
