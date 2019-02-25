@@ -6,7 +6,7 @@ services:
     image: mongo
     command: mongod --port 27017 --configsvr --replSet configserver --noprealloc --smallfiles --oplogSize 16
     volumes:
-      - ./scripts:/scripts
+      - /root/mongo-shard-docker-compose-master/scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/config01/db:/data/db
     deploy:
       replicas: 1
@@ -18,7 +18,7 @@ services:
     image: mongo
     command: mongod --port 27017 --configsvr --replSet configserver --noprealloc --smallfiles --oplogSize 16
     volumes:
-      - ./scripts:/scripts
+      - /root/mongo-shard-docker-compose-master/scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/config02/db:/data/db
     deploy:
       replicas: 1
@@ -30,7 +30,7 @@ services:
     image: mongo
     command: mongod --port 27017 --configsvr --replSet configserver --noprealloc --smallfiles --oplogSize 16
     volumes:
-      - ./scripts:/scripts
+      - /root/mongo-shard-docker-compose-master/scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/config03/db:/data/db
     deploy:
       replicas: 1
@@ -43,7 +43,7 @@ services:
     image: mongo
     command: mongod --port 27018 --shardsvr --replSet shard01 --noprealloc --smallfiles --oplogSize 16
     volumes:
-      - ./scripts:/scripts
+      - /root/mongo-shard-docker-compose-master/scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard01a/db:/data/db
     deploy:
       replicas: 1
@@ -55,7 +55,7 @@ services:
     image: mongo
     command: mongod --port 27018 --shardsvr --replSet shard01 --noprealloc --smallfiles --oplogSize 16
     volumes:
-      - ./scripts:/scripts
+      - /root/mongo-shard-docker-compose-master/scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard01b/db:/data/db
     deploy:
       replicas: 1
@@ -67,7 +67,7 @@ services:
     image: mongo
     command: mongod --port 27019 --shardsvr --replSet shard02 --noprealloc --smallfiles --oplogSize 16
     volumes:
-      - ./scripts:/scripts
+      - /root/mongo-shard-docker-compose-master/scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard02a/db:/data/db
     deploy:
       replicas: 1
@@ -79,7 +79,7 @@ services:
     image: mongo
     command: mongod --port 27019 --shardsvr --replSet shard02 --noprealloc --smallfiles --oplogSize 16
     volumes:
-      - ./scripts:/scripts
+      - /root/mongo-shard-docker-compose-master/scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard02b/db:/data/db
     deploy:
       replicas: 1
@@ -91,7 +91,7 @@ services:
     image: mongo
     command: mongod --port 27020 --shardsvr --replSet shard03 --noprealloc --smallfiles --oplogSize 16
     volumes:
-      - ./scripts:/scripts
+      - /root/mongo-shard-docker-compose-master/scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard03a/db:/data/db
     deploy:
       replicas: 1
@@ -103,7 +103,7 @@ services:
     image: mongo
     command: mongod --port 27020 --shardsvr --replSet shard03 --noprealloc --smallfiles --oplogSize 16
     volumes:
-      - ./scripts:/scripts
+      - /root/mongo-shard-docker-compose-master/scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/shard03b/db:/data/db
     deploy:
       replicas: 1
@@ -118,7 +118,7 @@ services:
     # ports:
     #   - "27017:27017"
     volumes:
-      - ./scripts:/scripts
+      - /root/mongo-shard-docker-compose-master/scripts:/scripts
       - /data/volumes/stratistik/mongodb/sharding/router/db:/data/db
     deploy:
       replicas: 3
